@@ -1,5 +1,11 @@
 version: 0.2
 
+env:
+  parameter-store:
+    USERNAME: /app/docker-credentials/username
+    PASSWORD: /app/docker-credentials/password
+    URL: /app/docker-credentials/docker-registry
+    
 phases:
  install: 
    runtime-versions:
@@ -12,6 +18,8 @@ phases:
    commands:
      - echo "Running the build pipeline here"
      - cd simple-python-app
+     - docker build -t "$URL/$USERNAME/simple-python-app:latest" .
+     - docker push "$URL/$USERNAME/simple-python-app:latest"
  post_build:
    commands:
      - echo "Build completed successfully..."

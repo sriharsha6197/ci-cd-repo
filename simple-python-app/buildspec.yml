@@ -1,0 +1,17 @@
+version: 0.2
+
+phases:
+ install: 
+   runtime-versions:
+     python: 3.11
+ pre_build:
+   commands:
+     - echo: "Installing dependencies..."
+     - pip install -r simple-python-app/requirements.txt
+ build:
+   commands:
+     - echo "Running the build pipeline here"
+     - cd /simple-python-app
+ post_build:
+   commands:
+     - echo "Build completed successfully..."

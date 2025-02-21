@@ -1,0 +1,28 @@
+version: 0.2
+
+env:
+  parameter-store:
+    USERNAME: /app/docker-credentials/username
+    PASSWORD: /app/docker-credentials/password
+    URL: /app/docker-credentials/docker-registry
+
+phases:
+  install:
+    runtime-versions:
+      python: 3.11
+
+  pre_build:
+    commands:
+      - echo "Installing requirements..."
+      - pip install -r simple-python-app/requirements.txt
+  build:
+    commands:
+      - echo "Installing dependencies..."
+      - cd simple-python-app
+      - echo "$PASSWORD" | docker login -u "$USERNAME" --password-stdin "$URL""
+      - docker build -t "$URL/$USERNAME/simple-python-app:latest" .
+      - docker push "$URL/$USERNAME/simple-python-app:latest"
+
+  post_build:
+    commands:
+      - echo "Build completed successfully...

@@ -19,7 +19,7 @@ phases:
     commands:
       - echo "Installing dependencies..."
       - cd simple-python-app
-      - echo "$PASSWORD" | docker login -u "$USERNAME" --password-stdin "$URL""
+      - echo "$PASSWORD" | docker login -u "$USERNAME" --password-stdin "$URL"
       - docker build -t "$URL/$USERNAME/simple-python-app:latest" .
       - docker push "$URL/$USERNAME/simple-python-app:latest"
 
